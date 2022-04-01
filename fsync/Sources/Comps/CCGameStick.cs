@@ -61,4 +61,12 @@ public class CCGameStick : MonoBehaviour, IUIGameStick
 	{
 		this.delegate1.updateView();
 	}
+
+	public void Awake()
+    {
+        if (this.viewNode == null)
+        {
+			this.viewNode = this.gameObject;
+		}
+	}
 }

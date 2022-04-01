@@ -9,7 +9,7 @@ namespace kitten.gamepad
 	/**
 	 * 移动摇杆
 	 */
-	public class MoveStick : MouseStick
+	public class MoveStick : GameStick
 	{
 
 		public override bool handlerInput(fsync.UserInputData data)
