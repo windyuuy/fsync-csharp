@@ -116,7 +116,7 @@ namespace WTC.DOM
 
 						this.onkeydown(e);
 					}
-					Debug.LogWarning("input string: " + inputString);
+					//Debug.LogWarning("input string: " + inputString);
 				}
 			}
 

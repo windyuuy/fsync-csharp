@@ -11,27 +11,27 @@ using System.Collections.Generic;
 using gcc.uit;
 using number = System.Double;
 
-public class CCGamepad : UnityEngine.MonoBehaviour, IUIGamepad
+public class UIGamepad : UnityEngine.MonoBehaviour, IUIGamepad
 {
 	protected gcc.uit.UIGamepadHandler? delegate1;
 
-	public CCGameStick LeftStick { get => leftStick; set => leftStick = value; }
-	public CCGameStick RightStick { get => rightStick; set => rightStick = value; }
-	public List<CCGameStick> SkillSticks { get => skillSticks; }
+	public UIGameStick LeftStick { get => leftStick; set => leftStick = value; }
+	public UIGameStick RightStick { get => rightStick; set => rightStick = value; }
+	public List<UIGameStick> SkillSticks { get => skillSticks; }
 
 	public bool ToDrawDebugView { get => toDrawDebugView; set => toDrawDebugView = value; }
 
 	// @property({ type: UIGameStickHandler, displayName: "移动摇杆", })
 	[SerializeField]
-	public CCGameStick? leftStick = null;
+	public UIGameStick? leftStick = null;
 
 	// @property({ type: UIGameStickHandler, displayName: "攻击摇杆", })
 	[SerializeField]
-	private CCGameStick? rightStick = null;
+	private UIGameStick? rightStick = null;
 
 	// @property({ type: [UIGameStickHandler], displayName: "其他摇杆列表", })
 	[SerializeField]
-	private List<CCGameStick> skillSticks = new List<CCGameStick>();
+	private List<UIGameStick> skillSticks = new List<UIGameStick>();
 
 	[SerializeField]
 	private bool toDrawDebugView = false;
@@ -53,7 +53,7 @@ public class CCGamepad : UnityEngine.MonoBehaviour, IUIGamepad
 		this.delegate1!.update();
 	}
 
-    public kitten.gamepad.NormalGamepad gamepad
+	public kitten.gamepad.NormalGamepad gamepad
 	{
 		get
 		{

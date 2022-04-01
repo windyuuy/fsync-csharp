@@ -8,20 +8,19 @@ namespace gcc.uit
 	using Vector = fsync.amath.Vector;
 	using number = System.Double;
 
-	public interface IUIGamepad
+    public interface IUIGamepad
 	{
-		CCGameStick LeftStick { get; set; }
-		CCGameStick RightStick { get; set; }
-		List<CCGameStick> SkillSticks { get; }
+		UIGameStick LeftStick { get; set; }
+		UIGameStick RightStick { get; set; }
+		List<UIGameStick> SkillSticks { get; }
 		bool ToDrawDebugView { get; set; }
 	}
 
 	// @ccclass("CCGamepad")
 	public class UIGamepadHandler
 	{
-
 		// @property({ type: CCGameStick, displayName: "左侧摇杆", })
-		public CCGameStick leftStick
+		public UIGameStick leftStick
 		{
 			get
 			{
@@ -34,7 +33,7 @@ namespace gcc.uit
 		}
 
 		// @property({ type: CCGameStick, displayName: "右侧摇杆", })
-		public CCGameStick rightStick
+		public UIGameStick rightStick
 		{
 			get
 			{
@@ -47,7 +46,7 @@ namespace gcc.uit
 		}
 
 		// @property({ type: [CCGameStick], displayName: "其他摇杆列表", })
-		public List<CCGameStick> skillSticks
+		public List<UIGameStick> skillSticks
 		{
 			get
 			{
@@ -117,9 +116,9 @@ namespace gcc.uit
 
 		}
 
-		protected List<CCGameStick> getSkillStickViews()
+		protected List<UIGameStick> getSkillStickViews()
 		{
-			var skillStickViews = new List<CCGameStick>();
+			var skillStickViews = new List<UIGameStick>();
 
 
 			if (this.leftStick != null)

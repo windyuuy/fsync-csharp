@@ -7,7 +7,8 @@ using gcc.uit;
 using kitten.gamepad;
 using UnityEngine;
 
-public class CCGameStick : MonoBehaviour, IUIGameStick
+[ExecuteInEditMode]
+public class UIGameStick : MonoBehaviour, IUIGameStick
 {
 
 	protected gcc.uit.UIGameStickHandler delegate1;
@@ -45,7 +46,7 @@ public class CCGameStick : MonoBehaviour, IUIGameStick
 	UnityEngine.GameObject? stickTouchPoint = null;
 	public kitten.gamepad.CircleStick? stick = null;
 
-	public CCGameStick() : base()
+	public UIGameStick() : base()
 	{
 		this.delegate1 = new gcc.uit.UIGameStickHandler();
 		this.delegate1.loadFromJson(this);
@@ -63,9 +64,9 @@ public class CCGameStick : MonoBehaviour, IUIGameStick
 	}
 
 	public void Awake()
-    {
-        if (this.viewNode == null)
-        {
+	{
+		if (this.viewNode == null)
+		{
 			this.viewNode = this.gameObject;
 		}
 	}

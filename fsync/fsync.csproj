@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Sources\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>E:\PROCS\IDESS\Unity\2021.2.15f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
