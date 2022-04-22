@@ -10,14 +10,14 @@ namespace kitten.UnityAdapter
 
 		public static readonly ScreenTool screenTool = new ScreenTool().init();
 
-		public float designWidth
+		public virtual float designWidth
 		{
 			get
 			{
 				return UnityEngine.Screen.width;
 			}
 		}
-		public float designHeight
+		public virtual float designHeight
 		{
 			get
 			{
@@ -25,7 +25,7 @@ namespace kitten.UnityAdapter
 			}
 		}
 
-		public ScreenTool init()
+		public virtual ScreenTool init()
 		{
 			return this;
 		}
@@ -35,7 +35,7 @@ namespace kitten.UnityAdapter
 		 * 从中央坐标系坐标转换到左下角坐标系坐标
 		 * @param x
 		 */
-		public number convertDesignXReverse(number x)
+		public virtual number convertDesignXReverse(number x)
 		{
 			return x - this.designWidth / 2;
 		}
@@ -44,7 +44,7 @@ namespace kitten.UnityAdapter
 		 * 从中央坐标系坐标转换到左下角坐标系坐标
 		 * @param x
 		 */
-		public number convertDesignYReverse(number y)
+		public virtual number convertDesignYReverse(number y)
 		{
 			// return this.designHeight / 2 - y;
 			return y - this.designHeight / 2;
@@ -54,7 +54,7 @@ namespace kitten.UnityAdapter
 		 * 从左下角坐标系坐标转换到中央坐标系坐标
 		 * @param x 
 		 */
-		public number convertDesignX(number x)
+		public virtual number convertDesignX(number x)
 		{
 			return x + this.designWidth / 2;
 		}
@@ -62,7 +62,7 @@ namespace kitten.UnityAdapter
 		 * 从左下角坐标系坐标转换到中央坐标系坐标
 		 * @param x
 		 */
-		public number convertDesignY(number y)
+		public virtual number convertDesignY(number y)
 		{
 			// return this.designHeight / 2 - y;
 			return y + this.designHeight / 2;

@@ -29,13 +29,13 @@ namespace kitten.gamepad
 			* - 当玩家第一次触摸摇杆时,摇杆的触摸起点要设置为当前触摸点
 			* - 玩家放开触摸摇杆时,摇杆中心点和当前触摸点复位
 			*/
-			if (this.ctrlStatusRaw.touchAction == "begin")
+			if (this.ctrlStatusRaw.touchAction == TTouchAction.Begin)
 			{
 				this.needResetAfterLoose = false;
 				this.setStartPos(this.ctrlStatusRaw.touchPoint);
 				this.calcTouchVector();
 			}
-			else if (this.ctrlStatusRaw.touchAction == "end")
+			else if (this.ctrlStatusRaw.touchAction == TTouchAction.End)
 			{
 				this.needResetAfterLoose = true;
 				this.calcTouchVector();

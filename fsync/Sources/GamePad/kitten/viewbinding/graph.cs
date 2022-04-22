@@ -8,12 +8,12 @@ namespace graph
 		public static readonly Graph graph = new Graph();
 
 		protected graphengine.IGraph _graph;
-		public void setNativeGraph(graphengine.IGraph graph)
+		public virtual void setNativeGraph(graphengine.IGraph graph)
 		{
 			this._graph = graph;
 		}
 
-		public ISprite createSprite()
+		public virtual ISprite createSprite()
 		{
 			return _graph.createSprite();
 		}
@@ -24,7 +24,7 @@ namespace graph
 		}
 
 		public fsync.Event.SEvent<string, SystemEvent> systemEventCenter;
-		public fsync.Event.SEvent<string, SystemEvent> getSystemEvent()
+		public virtual fsync.Event.SEvent<string, SystemEvent> getSystemEvent()
 		{
 			if (systemEventCenter == null)
 			{

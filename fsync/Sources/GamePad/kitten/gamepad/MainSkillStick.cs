@@ -27,7 +27,7 @@ namespace kitten.gamepad
 		 * 检测鼠标控制技能方向
 		 * @param data 
 		 */
-		protected bool detectSkillRollInput(fsync.UserInputData data)
+		protected virtual bool detectSkillRollInput(fsync.UserInputData data)
 		{
 			// if (data.action == "onmousedown")
 			// {

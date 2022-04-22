@@ -8,7 +8,7 @@ namespace gcc.uit
 	using Vector = fsync.amath.Vector;
 	using number = System.Double;
 
-    public interface IUIGamepad
+	public interface IUIGamepad
 	{
 		UIGameStick LeftStick { get; set; }
 		UIGameStick RightStick { get; set; }
@@ -20,7 +20,7 @@ namespace gcc.uit
 	public class UIGamepadHandler
 	{
 		// @property({ type: CCGameStick, displayName: "左侧摇杆", })
-		public UIGameStick leftStick
+		public virtual UIGameStick leftStick
 		{
 			get
 			{
@@ -33,7 +33,7 @@ namespace gcc.uit
 		}
 
 		// @property({ type: CCGameStick, displayName: "右侧摇杆", })
-		public UIGameStick rightStick
+		public virtual UIGameStick rightStick
 		{
 			get
 			{
@@ -46,7 +46,7 @@ namespace gcc.uit
 		}
 
 		// @property({ type: [CCGameStick], displayName: "其他摇杆列表", })
-		public List<UIGameStick> skillSticks
+		public virtual List<UIGameStick> skillSticks
 		{
 			get
 			{
@@ -56,7 +56,7 @@ namespace gcc.uit
 		}
 
 		// @property({ type: Boolean, displayName: "是否显示调试视图", })
-		public bool toDrawDebugView
+		public virtual bool toDrawDebugView
 		{
 			get
 			{
@@ -69,14 +69,14 @@ namespace gcc.uit
 		}
 
 		protected IUIGamepad data;
-		public void loadFromJson(IUIGamepad data)
+		public virtual void loadFromJson(IUIGamepad data)
 		{
 			this.data = data;
 		}
 
 		public kitten.gamepad.NormalGamepad gamepad;
 
-		public void onLoad()
+		public virtual void onLoad()
 		{
 			this.gamepad = new kitten.gamepad.NormalGamepad().init();
 
@@ -93,7 +93,7 @@ namespace gcc.uit
 			}
 			foreach (var stickView in this.skillSticks)
 			{
-				var stick = new kitten.gamepad.GameStick().init($"skill_{ stickView.StickRange.GetInstanceID()}", this.gamepad.sharedState);
+				var stick = new kitten.gamepad.GameStick().init($"skill_{stickView.StickRange.GetInstanceID()}", this.gamepad.sharedState);
 
 				this.gamepad.virutalCtrls.Add(stick);
 
@@ -111,12 +111,12 @@ namespace gcc.uit
 			this.updateView();
 		}
 
-		public void start()
+		public virtual void start()
 		{
 
 		}
 
-		protected List<UIGameStick> getSkillStickViews()
+		protected virtual List<UIGameStick> getSkillStickViews()
 		{
 			var skillStickViews = new List<UIGameStick>();
 
@@ -137,7 +137,7 @@ namespace gcc.uit
 			return skillStickViews;
 		}
 
-		public void updateViewVisible()
+		public virtual void updateViewVisible()
 		{
 			var skillStickViews = this.getSkillStickViews();
 
@@ -155,7 +155,7 @@ namespace gcc.uit
 			}
 		}
 
-		public void updateView()
+		public virtual void updateView()
 		{
 			this.updateViewVisible();
 
@@ -177,7 +177,7 @@ namespace gcc.uit
 			this.gamepad.updateSimpleView(this.toDrawDebugView);
 		}
 
-		public void update()
+		public virtual void update()
 		{
 			if (this.gamepad.changedCount > 0 && this.gamepad.inputEnabled)
 			{
@@ -187,7 +187,7 @@ namespace gcc.uit
 			}
 		}
 
-		public void setSkillEnabled(number index, bool b)
+		public virtual void setSkillEnabled(number index, bool b)
 		{
 			this.gamepad.virutalCtrls[(int)index].enable = b;
 		}

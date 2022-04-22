@@ -75,7 +75,7 @@ namespace kitten.gamepad
 		 * 更新手柄状态,包含:
 		 * - 延迟状态
 		 */
-		public void updateVirtualCtrls()
+		public virtual void updateVirtualCtrls()
 		{
 			this.virutalCtrls.ForEach((ctrl) => ctrl.updateStatus());
 			// var inputMap: { [key: string]: CircleStick } = {}
@@ -108,7 +108,7 @@ namespace kitten.gamepad
 		 */
 		public StickSharedState sharedState;
 
-		public NormalGamepad init()
+		public virtual NormalGamepad init()
 		{
 
 			this.sharedState = new StickSharedState();
@@ -160,7 +160,7 @@ namespace kitten.gamepad
 		/**
 		 * 创建调试视图
 		 */
-		public void setupSimpleView()
+		public virtual void setupSimpleView()
 		{
 			while (this.virtualCtrlViews.Count < 2)
 			{
@@ -190,7 +190,7 @@ namespace kitten.gamepad
 
 		}
 
-		public void updateSimpleView(bool visible)
+		public virtual void updateSimpleView(bool visible)
 		{
 			foreach (var ctrl in this.virutalCtrls)
 			{
@@ -213,7 +213,7 @@ namespace kitten.gamepad
 		 * 处理各类输入
 		 * @param data 
 		 */
-		public bool handlerInput(fsync.UserInputData data)
+		public virtual bool handlerInput(fsync.UserInputData data)
 		{
 			if (!this.enable)
 			{

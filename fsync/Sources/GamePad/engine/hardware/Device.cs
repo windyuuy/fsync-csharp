@@ -19,7 +19,7 @@ namespace fsync
 
 		public Vector3 clientSize;
 
-		public amath.Rect clientRect
+		public virtual amath.Rect clientRect
 		{
 			get
 			{
@@ -32,7 +32,7 @@ namespace fsync
 
 		public List<Action<UserInputData>> userEventHandlers;
 
-		public Device init(amath.Vector3? screenSize = null)
+		public virtual Device init(amath.Vector3? screenSize = null)
 		{
 			if (this.userEventHandlers == null)
 			{

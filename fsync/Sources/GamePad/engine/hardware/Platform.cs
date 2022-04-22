@@ -8,7 +8,7 @@ namespace fsync
 		public static readonly Platform platform = new Platform().init();
 		public bool isBrowser = false;
 
-		public Platform init()
+		public virtual Platform init()
 		{
 			this.isBrowser = (Document.document != null);
 			return this;

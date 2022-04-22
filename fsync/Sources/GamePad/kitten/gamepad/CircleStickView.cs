@@ -16,12 +16,12 @@ namespace kitten.gamepad
 		public string ctrlId;
 		protected graphengine.ISprite circleView;
 
-		public CircleStickView init()
+		public virtual CircleStickView init()
 		{
 			return this;
 		}
 
-		public void setupView(CircleStick ctrl, string color)
+		public virtual void setupView(CircleStick ctrl, string color)
 		{
 			//var length = Vector.len(UserInput.inst.clientSize);
 
@@ -33,17 +33,17 @@ namespace kitten.gamepad
 			this.circleView.setPos(center.x, center.y);
 		}
 
-		public void updateView(CircleStick ctrl)
-        {
+		public virtual void updateView(CircleStick ctrl)
+		{
 			var center = ctrl.getCtrlCenterPos();
 			this.circleView.setPos(center.x, center.y);
 		}
 
-		public bool visible
-        {
+		public virtual bool visible
+		{
 			get { return circleView.visible; }
 			set { circleView.visible = value; }
-        }
+		}
 
 	}
 }

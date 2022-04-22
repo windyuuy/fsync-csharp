@@ -745,7 +745,7 @@ namespace fsync.amath
 			return string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}", M11, M12, M13, M21, M22, M23, M31, M32, M33);
 		}
 
-		static TSVector cacheColumn;
+		static TSVector cacheColumn=new TSVector();
 		public TSVector column0
 		{
 			get

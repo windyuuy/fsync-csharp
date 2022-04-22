@@ -13,7 +13,14 @@ namespace kitten.gamepad
 	* - end 刚刚松开
 	* - loosed 松开状态
 	*/
-	using TTouchAction = System.String;// "move" | "begin" | "end" | "loosed"
+	// using TTouchAction = System.String;// "move" | "begin" | "end" | "loosed"
+	public enum TTouchAction
+	{
+		Loosed = 0,
+		Begin,
+		Move,
+		End,
+	}
 
 	/**
 	 * 前一次摇杆状态
@@ -28,6 +35,11 @@ namespace kitten.gamepad
 	 */
 	public class StickCtrlState
 	{
+		public static bool IsChanged(StickCtrlState ctrlState, bool pressed, Vector3 pos)
+		{
+			return ctrlState.pressed != pressed || ctrlState.touchPoint.x != pos.x || ctrlState.touchPoint.y != pos.y;
+		}
+
 		/**
 		 * 当前触摸位置
 		 */
@@ -51,7 +63,7 @@ namespace kitten.gamepad
 		/**
 		 * 触摸操控状态
 		 */
-		public TTouchAction touchAction = "loosed";
+		public TTouchAction touchAction = TTouchAction.Loosed;
 
 		/**
 		 * 控制器轴心位置

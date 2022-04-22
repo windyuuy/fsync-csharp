@@ -20,13 +20,13 @@ namespace kitten.UnityAdapter
 		public GameObject node;
 		public Image sprite;
 
-		public bool visible
+		public virtual bool visible
 		{
 			get { return this.node.activeSelf; }
 			set { this.node.SetActive(value); }
 		}
 
-		protected void init()
+		protected virtual void init()
 		{
 			this.objId = SpriteImpl.s_objId++;
 
@@ -38,7 +38,7 @@ namespace kitten.UnityAdapter
 			this.node.transform.localPosition = new Vector3(0, 0, 0);
 		}
 
-		public void destroy()
+		public virtual void destroy()
 		{
 			// this.node.destroy()
 			var loc = this.node.transform.localPosition;
@@ -49,7 +49,7 @@ namespace kitten.UnityAdapter
 			this.sprite = null;
 		}
 
-		public void setColor(string clr)
+		public virtual void setColor(string clr)
 		{
 			var ncolor = UnityEngine.Color.white;
 			if (clr == "red")
@@ -99,7 +99,7 @@ namespace kitten.UnityAdapter
 			this.sprite.color = ncolor;
 		}
 
-		public void setPos(number x, number y)
+		public virtual void setPos(number x, number y)
 		{
 			this.node.transform.localPosition = new Vector3(
 				(float)ScreenTool.screenTool.convertDesignXReverse(x),
@@ -107,7 +107,7 @@ namespace kitten.UnityAdapter
 				0
 			);
 		}
-		public void setSize(number width, number height)
+		public virtual void setSize(number width, number height)
 		{
 			// if (this.node['setContentSize']) {
 			// 	this.node['setContentSize'](width, height);
@@ -117,7 +117,7 @@ namespace kitten.UnityAdapter
 			this.node.transform.localScale = new Vector3((float)width, (float)height, 1);
 			//this.node.GetComponent<RectTransform>().rect.Set()
 		}
-		public void setRadius(number radius)
+		public virtual void setRadius(number radius)
 		{
 			// if (this.node['setContentSize']) {
 			// 	this.node['setContentSize'](radius, radius);
@@ -131,7 +131,7 @@ namespace kitten.UnityAdapter
 
 	public class GraphImpl : graphengine.IGraph
 	{
-		public ISprite createSprite()
+		public virtual ISprite createSprite()
 		{
 			return new SpriteImpl();
 		}

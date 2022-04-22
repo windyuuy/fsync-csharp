@@ -58,8 +58,8 @@ namespace WTC.DOM
 		public Action<TouchEvent>? ontouchmove = null;
 		public Action<UIEvent>? onresize = null;
 
-		protected Dictionary<KeyCode,bool> pressedKeys=new Dictionary<KeyCode, bool>();
-		public void Update()
+		protected Dictionary<KeyCode, bool> pressedKeys = new Dictionary<KeyCode, bool>();
+		public virtual void Update()
 		{
 			#region Mouse
 			// 左键
@@ -103,8 +103,8 @@ namespace WTC.DOM
 			if (Input.anyKeyDown)
 			{
 				var inputString = Input.inputString;
-				foreach(var key in inputString)
-                {
+				foreach (var key in inputString)
+				{
 					var keyCode = (KeyCode)key;
 					if (Input.GetKeyDown(keyCode))
 					{
@@ -120,8 +120,8 @@ namespace WTC.DOM
 				}
 			}
 
-			foreach(var keyCode in this.pressedKeys.Keys.ToArray())
-            {
+			foreach (var keyCode in this.pressedKeys.Keys.ToArray())
+			{
 				if (Input.GetKeyUp(keyCode))
 				{
 					this.pressedKeys.Remove(keyCode);

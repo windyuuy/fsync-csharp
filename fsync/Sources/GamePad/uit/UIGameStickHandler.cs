@@ -27,7 +27,7 @@ namespace gcc.uit
 		 * 整体节点
 		 */
 		// @property({ type: GameObject, displayName: "整体节点" })
-		public GameObject viewNode
+		public virtual GameObject viewNode
 		{
 			get
 			{
@@ -43,7 +43,7 @@ namespace gcc.uit
 		 * 触摸区域
 		 */
 		// @property({ type: GameObject, displayName: "触控范围", })
-		public GameObject stickRange
+		public virtual GameObject stickRange
 		{
 			get
 			{
@@ -59,7 +59,7 @@ namespace gcc.uit
 		 * 摇杆中心视图
 		 */
 		// @property({ type: GameObject, displayName: "滑动区域", tooltip: "控制摇杆触点的滑动区域", })
-		public GameObject stickCenter
+		public virtual GameObject stickCenter
 		{
 			get
 			{
@@ -75,7 +75,7 @@ namespace gcc.uit
 		 * 摇杆触摸点视图
 		 */
 		// @property({ type: GameObject, displayName: "触点" })
-		public GameObject stickTouchPoint
+		public virtual GameObject stickTouchPoint
 		{
 			get
 			{
@@ -88,13 +88,13 @@ namespace gcc.uit
 		}
 
 		protected IUIGameStick data;
-		public void loadFromJson(IUIGameStick data)
+		public virtual void loadFromJson(IUIGameStick data)
 		{
 			this.data = data;
 		}
 
 		public kitten.gamepad.CircleStick stick = null;
-		public void syncViewData(kitten.gamepad.CircleStick stick)
+		public virtual void syncViewData(kitten.gamepad.CircleStick stick)
 		{
 			this.stick = stick;
 
@@ -123,7 +123,7 @@ namespace gcc.uit
 			}
 		}
 
-		public void updateMainView()
+		public virtual void updateMainView()
 		{
 			var stick = this.stick;
 			var stickView = this;
@@ -159,7 +159,7 @@ namespace gcc.uit
 
 		protected TransformTool transformTool = TransformTool.Inst;
 
-		public void updateDetailView()
+		public virtual void updateDetailView()
 		{
 			var stick = this.stick;
 			var stickView = this;
@@ -176,7 +176,7 @@ namespace gcc.uit
 				}
 			}
 		}
-		public void updateView()
+		public virtual void updateView()
 		{
 			var stick = this.stick;
 			if (stick == null)

@@ -45,7 +45,7 @@ namespace kitten.gamepad
 		protected Dictionary<string, bool> pressingKeys = new Dictionary<string, bool>();
 		protected bool isKeyPressing = false;
 
-		protected void updateKeyboardInputStatus()
+		protected virtual void updateKeyboardInputStatus()
 		{
 			var k = (new string[] { "a", "d", "w", "s" }).Where((kx) =>
 			{
@@ -74,7 +74,7 @@ namespace kitten.gamepad
 		 * 检测键盘输入控制
 		 * @param data 
 		 */
-		protected bool detectKeyboardMoveInput(fsync.UserInputData data)
+		protected virtual bool detectKeyboardMoveInput(fsync.UserInputData data)
 		{
 			if (data.action == "onkeydown")
 			{

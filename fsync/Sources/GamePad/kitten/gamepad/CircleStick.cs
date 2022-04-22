@@ -40,7 +40,7 @@ namespace kitten.gamepad
 		}
 
 		protected List<string> inputPorts;
-		protected void updateInputPorts()
+		protected virtual void updateInputPorts()
 		{
 			this.inputPorts = this.multiTouchMap.Keys.Where((key) =>
 			{
@@ -48,7 +48,7 @@ namespace kitten.gamepad
 			}).ToList();
 		}
 
-		public StickCtrlState ctrlStatus
+		public virtual StickCtrlState ctrlStatus
 		{
 			get
 			{
@@ -59,7 +59,7 @@ namespace kitten.gamepad
 		/**
 		 * 获取触控范围中心店
 		 */
-		public Vector3 getCtrlCenterPos()
+		public virtual Vector3 getCtrlCenterPos()
 		{
 			return this.ctrlStatus.ctrlPos;
 		}
@@ -67,7 +67,7 @@ namespace kitten.gamepad
 		/**
 		 * 获取摇杆位置
 		 */
-		public Vector3 getCtrlTouchPoint()
+		public virtual Vector3 getCtrlTouchPoint()
 		{
 			return this.ctrlStatus.touchPoint;
 		}
@@ -119,12 +119,12 @@ namespace kitten.gamepad
 				if (this.ctrlStatusRaw.pressed)
 				{
 					// press -> press
-					this.ctrlStatusRaw.touchAction = "move";
+					this.ctrlStatusRaw.touchAction = TTouchAction.Move;
 				}
 				else
 				{
 					// press -> loosed
-					this.ctrlStatusRaw.touchAction = "end";
+					this.ctrlStatusRaw.touchAction = TTouchAction.End;
 				}
 			}
 			else
@@ -132,12 +132,12 @@ namespace kitten.gamepad
 				if (this.ctrlStatusRaw.pressed)
 				{
 					// loosed -> press
-					this.ctrlStatusRaw.touchAction = "begin";
+					this.ctrlStatusRaw.touchAction = TTouchAction.Begin;
 				}
 				else
 				{
 					// loosed -> loosed
-					this.ctrlStatusRaw.touchAction = "loosed";
+					this.ctrlStatusRaw.touchAction = TTouchAction.Loosed;
 				}
 			}
 			this.lastCtrlStatus.pressed = this.ctrlStatusRaw.pressed;
@@ -227,7 +227,7 @@ namespace kitten.gamepad
 		 * 获取触控半径
 		 * @param radius
 		 */
-		public number getCircleRadius()
+		public virtual number getCircleRadius()
 		{
 			return this.circleRadius;
 		}
@@ -249,7 +249,7 @@ namespace kitten.gamepad
 		/**
 		 * 获取触控范围
 		 */
-		protected IWHRectSpec getTouchRange()
+		protected virtual IWHRectSpec getTouchRange()
 		{
 			// var width = this.circleRadius
 			// var height = this.circleRadius
@@ -304,7 +304,7 @@ namespace kitten.gamepad
 		 * 检测虚拟手柄输入
 		 * @param data 
 		 */
-		protected bool detectVirtualCirleInput(fsync.UserInputData data)
+		protected virtual bool detectVirtualCirleInput(fsync.UserInputData data)
 		{
 			if (data.action == "ontouchstart")
 			{

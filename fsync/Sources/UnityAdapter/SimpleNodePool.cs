@@ -11,19 +11,19 @@ namespace kitten.UnityAdapter
 		protected GameObject defaultSprite = null;
 		protected GameObject container = null;
 
-		public SimpleNodePool init()
+		public virtual SimpleNodePool init()
 		{
 			this.nodePool = new List<GameObject>();
 			return this;
 		}
 
-		public void initSlots(GameObject c, GameObject s)
+		public virtual void initSlots(GameObject c, GameObject s)
 		{
 			this.container = c;
 			this.defaultSprite = s;
 		}
 
-		public GameObject pop()
+		public virtual GameObject pop()
 		{
 			GameObject node = null;
 			if (this.nodePool.Count > 0)
@@ -41,7 +41,7 @@ namespace kitten.UnityAdapter
 			return node;
 		}
 
-		public void push(GameObject node)
+		public virtual void push(GameObject node)
 		{
 			this.nodePool.Add(node);
 		}

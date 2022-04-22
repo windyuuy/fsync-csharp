@@ -16,7 +16,7 @@ namespace kitten.uievent
 	{
 		public static readonly UIEventHandler uiEventHandler = new UIEventHandler();
 
-		protected void handleEvent(UserInputData data)
+		protected virtual void handleEvent(UserInputData data)
 		{
 			// data.event1.clientX=this
 
@@ -30,7 +30,7 @@ namespace kitten.uievent
 		protected Func<number, number> convertDesignY;
 
 		protected bool isEnabled = false;
-		public void enableUIEvent()
+		public virtual void enableUIEvent()
 		{
 			if (this.isEnabled)
 			{
@@ -327,7 +327,7 @@ namespace kitten.uievent
 
 
 
-		public void postInitEvent(Vector3? size = null)
+		public virtual void postInitEvent(Vector3? size = null)
 		{
 			var clientSize = fsync.Device.device.clientSize;
 			if (size != null)

@@ -29,7 +29,7 @@ namespace kitten
 		{
 			public static readonly Manager manager = new Manager();
 
-			public void init(ModulesInitConfig config)
+			public virtual void init(ModulesInitConfig config)
 			{
 				fsync.Device.device.init(config.screenSize);
 				graph.Graph.graph.setNativeGraph(config.graphImpl);
@@ -37,7 +37,7 @@ namespace kitten
 				kitten.uievent.UIEventHandler.uiEventHandler.postInitEvent();
 			}
 
-			public void update()
+			public virtual void update()
 			{
 				WTC.DOM.Document.document.Update();
 			}

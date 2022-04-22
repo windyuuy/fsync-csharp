@@ -58,14 +58,14 @@ namespace fsync
 
 		public bool enable = true;
 
-		public Vector3 clientSize
+		public virtual Vector3 clientSize
 		{
 			get
 			{
 				return Device.device.clientSize;
 			}
 		}
-		public UserInput init()
+		public virtual UserInput init()
 		{
 			this.eventHandlerMap = new Dictionary<string, UserInputHandler>();
 
@@ -105,7 +105,7 @@ namespace fsync
 			return this;
 		}
 
-		public void addHandler(string name, UserInputHandler handler)
+		public virtual void addHandler(string name, UserInputHandler handler)
 		{
 			this.eventHandlerMap[name] = handler;
 		}
