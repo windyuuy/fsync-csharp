@@ -98,6 +98,14 @@ namespace kitten.gamepad
 			// })
 		}
 
+		public event Action? OnUpdated = null;
+		public virtual void update()
+        {
+			this.updateVirtualCtrls();
+
+			OnUpdated?.Invoke();
+		}
+
 		/**
 		 * 摇杆列表
 		 */

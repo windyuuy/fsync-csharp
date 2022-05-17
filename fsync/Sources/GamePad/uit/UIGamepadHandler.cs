@@ -182,9 +182,10 @@ namespace gcc.uit
 			if (this.gamepad.changedCount > 0 && this.gamepad.inputEnabled)
 			{
 				this.gamepad.changedCount--;
-				this.gamepad.updateVirtualCtrls();
+				this.gamepad.update();
 				this.updateView();
 			}
+
 		}
 
 		public virtual void setSkillEnabled(number index, bool b)
