@@ -262,10 +262,11 @@ namespace kitten.gamepad
 			return this.touchRange;
 		}
 
-		/**
-		 * 处理触控输入
-		 * @param data 
-		 */
+		/// <summary>
+		/// 处理触控输入
+		/// </summary>
+		/// <param name="data"></param>
+		/// <returns>是否接受处理</returns>
 		public virtual bool handlerInput(fsync.UserInputData data)
 		{
 			if (!this.enable)
@@ -305,6 +306,26 @@ namespace kitten.gamepad
 		 * @param data 
 		 */
 		protected virtual bool detectVirtualCirleInput(fsync.UserInputData data)
+        {
+            if (detectTouchInput(data))
+            {
+				return true;
+            }else if (detectMouseInput(data))
+            {
+				return true;
+            }
+            else
+            {
+				return false;
+            }
+        }
+
+		/// <summary>
+		/// 检测手柄触摸输入
+		/// </summary>
+		/// <param name="data"></param>
+		/// <returns></returns>
+		protected virtual bool detectTouchInput(fsync.UserInputData data)
 		{
 			if (data.action == "ontouchstart")
 			{
@@ -362,6 +383,87 @@ namespace kitten.gamepad
 			{
 				return false;
 			}
+
+			this.ctrlStatusRaw.isStrengthInvalid = false;
+			return true;
+		}
+
+		/**
+		 * 检测鼠标控制技能方向
+		 * @param data 
+		 */
+		protected virtual bool detectMouseInput(fsync.UserInputData data)
+		{
+			// if (data.action == "onmousedown")
+			// {
+			// 	this.ctrlStatusRaw.pressed = true;
+
+			// }
+			// else if (data.action == "onmouseup")
+			// {
+			// 	this.ctrlStatusRaw.pressed = false;
+
+			// }
+			// else if (data.action == "onmousemove")
+			// {
+			// 	var ctrlPos = this.ctrlStatusRaw.ctrlPos;
+			// 	var offset = new number[] { data.event1.clientX - ctrlPos.x, data.event1.clientY - ctrlPos.y };
+			// 	var strength = System.Math.Sqrt(offset[0] * offset[0] + offset[1] * offset[1]);
+			// 	this.ctrlStatusRaw.dir.x = offset[0] / strength;
+			// 	this.ctrlStatusRaw.dir.y = offset[1] / strength;
+			// 	this.ctrlStatusRaw.strength = strength;
+			// }
+			// else
+			// {
+			// 	return false;
+			// }
+			// return true;
+
+			if (data.action == "onmousedown")
+			{
+				if (this.ctrlStatusRaw.pressed)
+				{
+					return true;
+				}
+
+				var t = data.event1;
+				var pos = Vector3.fromNumArray(new number[] { t.clientX, t.clientY });
+				if (BLRect.containPoint_s(this.getTouchRange(), pos))
+				{
+					this.ctrlStatusRaw.pressed = true;
+					this.ctrlStatusRaw.touchPoint.x = pos.x;
+					this.ctrlStatusRaw.touchPoint.y = pos.y;
+					Vector.normalizeSelf(this.ctrlStatusRaw.dir);
+				}
+			}
+			else if (data.action == "onmouseup")
+			{
+				if (this.ctrlStatusRaw.pressed)
+				{
+					var t = data.event1;
+					var pos = Vector3.fromNumArray(new number[] { t.clientX, t.clientY });
+					this.ctrlStatusRaw.pressed = false;
+					this.ctrlStatusRaw.touchPoint.x = pos.x;
+					this.ctrlStatusRaw.touchPoint.y = pos.y;
+				}
+			}
+			else if (data.action == "onmousemove")
+			{
+				if (this.ctrlStatusRaw.pressed)
+				{
+					var t = data.event1;
+					var pos = Vector3.fromNumArray(new number[] { t.clientX, t.clientY });
+					this.ctrlStatusRaw.touchPoint.x = pos.x;
+					this.ctrlStatusRaw.touchPoint.y = pos.y;
+					Vector.normalizeSelf(this.ctrlStatusRaw.dir);
+				}
+			}
+			else
+			{
+				return false;
+			}
+
+			this.ctrlStatusRaw.isStrengthInvalid = false;
 			return true;
 		}
 

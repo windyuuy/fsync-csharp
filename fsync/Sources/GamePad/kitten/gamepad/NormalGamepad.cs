@@ -242,8 +242,11 @@ namespace kitten.gamepad
 					b = b || b2;
 				}
 
-				// 因为松开位置同样也是当前位置, 所以松开时还在按下位置处
-				this.changedCount = b ? 2 : 0;
+                if (this.changedCount < 2)
+                {
+					// 因为松开位置同样也是当前位置, 所以松开时还在按下位置处
+					this.changedCount = b ? 2 : 0;
+				}
 
 				return b;
 			}

@@ -38,9 +38,18 @@ public class UIGamepad : UnityEngine.MonoBehaviour, IUIGamepad
 
 	public void Awake()
 	{
-		this.delegate1 = new gcc.uit.UIGamepadHandler();
-		this.delegate1.loadFromJson(this);
-		this.delegate1.onLoad();
+		Init();
+	}
+
+	public UIGamepad Init()
+	{
+        if (this.delegate1 == null)
+        {
+			this.delegate1 = new gcc.uit.UIGamepadHandler();
+			this.delegate1.loadFromJson(this);
+			this.delegate1.onLoad();
+		}
+		return this;
 	}
 
 	public void Start()
