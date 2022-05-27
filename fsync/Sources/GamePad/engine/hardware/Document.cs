@@ -51,6 +51,7 @@ namespace WTC.DOM
 		public Action<KeyboardEvent>? onkeyup = null;
 		public Action<MouseEvent>? onmousedown = null;
 		public Action<MouseEvent>? onmouseup = null;
+		public Action<MouseEvent>? onmousecancel = null;
 		public Action<MouseEvent>? onmousemove = null;
 		public Action<TouchEvent>? ontouchstart = null;
 		public Action<TouchEvent>? ontouchend = null;
@@ -59,14 +60,32 @@ namespace WTC.DOM
 		public Action<UIEvent>? onresize = null;
 
 		protected Dictionary<KeyCode, bool> pressedKeys = new Dictionary<KeyCode, bool>();
+
+		/// <summary>
+        /// 记录左键已经按下
+        /// </summary>
+		protected bool IsMouse0Pressed = false;
 		public virtual void Update()
 		{
 			#region Mouse
 			// 左键
 			if (Input.GetMouseButtonDown(0))
 			{
+                if (IsMouse0Pressed)
+                {
+					IsMouse0Pressed = false;
+
+					var e = new MouseEvent();
+					e.clientX = Input.mousePosition.x;
+					e.clientY = Input.mousePosition.y;
+
+					this.onmousecancel(e);
+				}
+
 				if (this.onmousedown != null)
 				{
+					IsMouse0Pressed = true;
+
 					var e = new MouseEvent();
 					e.clientX = Input.mousePosition.x;
 					e.clientY = Input.mousePosition.y;
@@ -78,6 +97,8 @@ namespace WTC.DOM
 			{
 				if (this.onmouseup != null)
 				{
+					IsMouse0Pressed = false;
+
 					var e = new MouseEvent();
 					e.clientX = Input.mousePosition.x;
 					e.clientY = Input.mousePosition.y;
@@ -96,7 +117,20 @@ namespace WTC.DOM
 
 					this.onmousemove(e);
 				}
-			}
+            }
+            else
+            {
+                if (IsMouse0Pressed)
+                {
+					IsMouse0Pressed = false;
+
+					var e = new MouseEvent();
+					e.clientX = Input.mousePosition.x;
+					e.clientY = Input.mousePosition.y;
+
+					this.onmousecancel(e);
+				}
+            }
 			#endregion
 
 			#region Keyboard

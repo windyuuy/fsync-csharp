@@ -175,6 +175,7 @@ namespace kitten.uievent
 				};
 				handleEvent(data);
 			};
+			document.onmousecancel = document.onmouseup;
 
 			document.onmousemove = (MouseEvent ev) =>
 			{
