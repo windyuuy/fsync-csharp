@@ -7,70 +7,73 @@ namespace fsync.Event
 	/// <summary>
 	/// 事件发送器
 	/// </summary>
-	public class SEvent<TKey, TValue>
+	public class SEvent<K, T>
 	{
 		/// <summary> 事件表 </summary>
-		private Dictionary<TKey, Action<TValue>> mEventDict = new Dictionary<TKey, Action<TValue>>();
+		protected Dictionary<K, Action<T>> _Event;
+
+		public SEvent()
+		{
+			this.Reset();
+		}
+
+		public virtual void Reset()
+		{
+			_Event = new Dictionary<K, Action<T>>();
+		}
 
 		/// <summary> 添加事件监听器 </summary>
 		/// <param name="eventType">事件类型</param>
 		/// <param name="eventHandler">事件处理器</param>
-		public void AddListener(TKey eventType, Action<TValue> eventHandler)
+		public virtual Action<T> On(K state, Action<T> call)
 		{
-			Action<TValue> callbacks;
-			if (mEventDict.TryGetValue(eventType, out callbacks))
+			if (this._Event!.ContainsKey(state))
 			{
-				mEventDict[eventType] = callbacks + eventHandler;
+				this._Event[state] += call;
 			}
 			else
 			{
-				mEventDict.Add(eventType, eventHandler);
+				this._Event[state] = call;
 			}
+			return call;
 		}
 
 		/// <summary> 移除事件监听器 </summary>
 		/// <param name="eventType">事件类型</param>
 		/// <param name="eventHandler">事件处理器</param>
-		public void RemoveListener(TKey eventType, Action<TValue> eventHandler)
+		public virtual void Off(K state, Action<T> call)
 		{
-			Action<TValue> callbacks;
-			if (mEventDict.TryGetValue(eventType, out callbacks))
+			if (this._Event!.ContainsKey(state))
 			{
-				callbacks = (Action<TValue>)Delegate.RemoveAll(callbacks, eventHandler);
-				if (callbacks == null)
+				if (this._Event[state] != null)
 				{
-					mEventDict.Remove(eventType);
-				}
-				else
-				{
-					mEventDict[eventType] = callbacks;
+					this._Event[state] -= call;
 				}
 			}
-		}
-
-		/// <summary> 是否已经拥有该类型的事件监听器 </summary>
-		/// <param name="eventType">事件名称</param>
-		public bool HasListener(TKey eventType)
-		{
-			return mEventDict.ContainsKey(eventType);
 		}
 
 		/// <summary> 发送事件 </summary>
 		/// <param name="eventType">事件类型</param>
 		/// <param name="eventArg">事件参数</param>
-		public void SendMessage(TKey eventType, TValue eventArg)
+		public virtual void Emit(K state, T data)
 		{
-			Action<TValue> callbacks;
-			if (mEventDict.TryGetValue(eventType, out callbacks))
+			if (this._Event!.ContainsKey(state))
 			{
-				callbacks.Invoke(eventArg);
+				this._Event[state]?.Invoke(data);
 			}
 		}
 
-		public void DriveHead(TKey eventType, TValue eventArg)
+		/// <summary> 是否已经拥有该类型的事件监听器 </summary>
+		/// <param name="eventType">事件名称</param>
+		public virtual bool HasListener(K eventType)
 		{
-			Action<TValue> callbacks;
-			if (mEventDict.TryGetValue(eventType, out callbacks))
+			return _Event.ContainsKey(eventType);
+		}
+
+		public virtual void DriveHead(K eventType, T eventArg)
+		{
+			Action<T> callbacks;
+			if (_Event.TryGetValue(eventType, out callbacks))
 			{
 				if (callbacks != null)
 				{
@@ -78,8 +81,8 @@ namespace fsync.Event
 					if (list.Length > 0)
 					{
 						var call0 = list[0];
-						var call = call0 as Action<TValue>;
-						mEventDict[eventType] = callbacks - call;
+						var call = call0 as Action<T>;
+						_Event[eventType] = callbacks - call;
 						call(eventArg);
 					}
 				}
@@ -87,10 +90,11 @@ namespace fsync.Event
 		}
 
 		/// <summary> 清理所有事件监听器 </summary>
-		public void Clear()
+		public virtual void Clear()
 		{
-			mEventDict.Clear();
+			_Event.Clear();
 		}
 
 	}
+
 }
