@@ -62,8 +62,8 @@ namespace WTC.DOM
 		protected Dictionary<KeyCode, bool> pressedKeys = new Dictionary<KeyCode, bool>();
 
 		/// <summary>
-        /// 记录左键已经按下
-        /// </summary>
+		/// 记录左键已经按下
+		/// </summary>
 		protected bool IsMouse0Pressed = false;
 		public virtual void Update()
 		{
@@ -71,8 +71,8 @@ namespace WTC.DOM
 			// 左键
 			if (Input.GetMouseButtonDown(0))
 			{
-                if (IsMouse0Pressed)
-                {
+				if (IsMouse0Pressed)
+				{
 					IsMouse0Pressed = false;
 
 					var e = new MouseEvent();
@@ -117,11 +117,11 @@ namespace WTC.DOM
 
 					this.onmousemove(e);
 				}
-            }
-            else
-            {
-                if (IsMouse0Pressed)
-                {
+			}
+			else
+			{
+				if (IsMouse0Pressed)
+				{
 					IsMouse0Pressed = false;
 
 					var e = new MouseEvent();
@@ -130,7 +130,7 @@ namespace WTC.DOM
 
 					this.onmousecancel(e);
 				}
-            }
+			}
 			#endregion
 
 			#region Keyboard
@@ -140,6 +140,18 @@ namespace WTC.DOM
 				foreach (var key in inputString)
 				{
 					var keyCode = (KeyCode)key;
+
+					if (this.pressedKeys.ContainsKey(keyCode))
+					{
+						this.pressedKeys.Remove(keyCode);
+
+						var e = new KeyboardEvent();
+						e.key = Enum.GetName(typeof(UnityEngine.KeyCode), keyCode);
+						e.keyCode = (int)keyCode;
+
+						this.onkeyup(e);
+					}
+
 					if (Input.GetKeyDown(keyCode))
 					{
 						var e = new KeyboardEvent();
@@ -154,7 +166,7 @@ namespace WTC.DOM
 				}
 			}
 
-			foreach (var keyCode in this.pressedKeys.Keys.ToArray())
+			foreach (var keyCode in pressedKeys.Keys.ToArray())
 			{
 				if (Input.GetKeyUp(keyCode))
 				{

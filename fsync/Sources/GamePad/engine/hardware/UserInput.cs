@@ -86,7 +86,8 @@ namespace fsync
 
 				if (data.event1.keyCode != null)
 				{
-					data.event1.key = keyCodeMap[data.event1.keyCode.Value];
+					keyCodeMap.TryGetValue(data.event1.keyCode.Value, out data.event1.key);
+					//data.event1.key = keyCodeMap[data.event1.keyCode.Value];
 				}
 				//data.event1.key = keyCodeMap[data.event1.keyCode.Value];
 				foreach (var handler in this.eventHandlerMap.Values)

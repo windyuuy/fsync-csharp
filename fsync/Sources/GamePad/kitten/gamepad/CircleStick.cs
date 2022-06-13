@@ -320,6 +320,7 @@ namespace kitten.gamepad
             }
         }
 
+		protected bool isTouchInput = false;
 		/// <summary>
 		/// 检测手柄触摸输入
 		/// </summary>
@@ -327,6 +328,11 @@ namespace kitten.gamepad
 		/// <returns></returns>
 		protected virtual bool detectTouchInput(fsync.UserInputData data)
 		{
+			if (isTouchInput==false && data.action != "ontouchstart")
+            {
+				return false;
+            }
+
 			if (data.action == "ontouchstart")
 			{
 				foreach (var t in data.event1.touches)
@@ -339,6 +345,8 @@ namespace kitten.gamepad
 					var pos = Vector3.fromNumArray(new number[] { t.clientX, t.clientY });
 					if (BLRect.containPoint_s(this.getTouchRange(), pos))
 					{
+						isTouchInput=true;
+
 						this.sharedState.multiTouchMap[t.identifier] = this.identity;
 						this.multiTouchMap[t.identifier] = this.identity;
 						this.ctrlStatusRaw.pressed = true;
@@ -354,6 +362,8 @@ namespace kitten.gamepad
 				{
 					if (this.multiTouchMap[t.identifier] == this.identity)
 					{
+						isTouchInput=false;
+
 						var pos = Vector3.fromNumArray(new number[] { t.clientX, t.clientY });
 						this.ctrlStatusRaw.pressed = false;
 						this.ctrlStatusRaw.touchPoint.x = pos.x;
@@ -388,36 +398,18 @@ namespace kitten.gamepad
 			return true;
 		}
 
+		protected bool isMouseInput = false;
+
 		/**
 		 * 检测鼠标控制技能方向
 		 * @param data 
 		 */
 		protected virtual bool detectMouseInput(fsync.UserInputData data)
 		{
-			// if (data.action == "onmousedown")
-			// {
-			// 	this.ctrlStatusRaw.pressed = true;
-
-			// }
-			// else if (data.action == "onmouseup")
-			// {
-			// 	this.ctrlStatusRaw.pressed = false;
-
-			// }
-			// else if (data.action == "onmousemove")
-			// {
-			// 	var ctrlPos = this.ctrlStatusRaw.ctrlPos;
-			// 	var offset = new number[] { data.event1.clientX - ctrlPos.x, data.event1.clientY - ctrlPos.y };
-			// 	var strength = System.Math.Sqrt(offset[0] * offset[0] + offset[1] * offset[1]);
-			// 	this.ctrlStatusRaw.dir.x = offset[0] / strength;
-			// 	this.ctrlStatusRaw.dir.y = offset[1] / strength;
-			// 	this.ctrlStatusRaw.strength = strength;
-			// }
-			// else
-			// {
-			// 	return false;
-			// }
-			// return true;
+			if (isMouseInput==false && data.action != "onmousedown")
+            {
+				return false;
+            }
 
 			if (data.action == "onmousedown")
 			{
@@ -430,6 +422,8 @@ namespace kitten.gamepad
 				var pos = Vector3.fromNumArray(new number[] { t.clientX, t.clientY });
 				if (BLRect.containPoint_s(this.getTouchRange(), pos))
 				{
+					isMouseInput = true;
+
 					this.ctrlStatusRaw.pressed = true;
 					this.ctrlStatusRaw.touchPoint.x = pos.x;
 					this.ctrlStatusRaw.touchPoint.y = pos.y;
@@ -440,6 +434,8 @@ namespace kitten.gamepad
 			{
 				if (this.ctrlStatusRaw.pressed)
 				{
+					isMouseInput = false;
+
 					var t = data.event1;
 					var pos = Vector3.fromNumArray(new number[] { t.clientX, t.clientY });
 					this.ctrlStatusRaw.pressed = false;

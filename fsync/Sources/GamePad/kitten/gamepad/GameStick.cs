@@ -20,10 +20,16 @@ namespace kitten.gamepad
 			return this;
 		}
 
-		public override void updateStatus()
-		{
-			this.updateTouchAction();
+		/// <summary>
+		/// 针对附带初始偏移的情况作处理
+		/// </summary>
+		protected virtual void updateTouchPoint()
+        {
 
+        }
+
+		protected virtual void updateCtrlStatus()
+        {
 			/**
 			* 游戏摇杆的特性:
 			* - 当玩家第一次触摸摇杆时,摇杆的触摸起点要设置为当前触摸点
@@ -33,11 +39,13 @@ namespace kitten.gamepad
 			{
 				this.needResetAfterLoose = false;
 				this.setStartPos(this.ctrlStatusRaw.touchPoint);
+				this.updateTouchPoint();
 				this.calcTouchVector();
 			}
 			else if (this.ctrlStatusRaw.touchAction == TTouchAction.End)
 			{
 				this.needResetAfterLoose = true;
+				this.updateTouchPoint();
 				this.calcTouchVector();
 			}
 			else
@@ -48,9 +56,16 @@ namespace kitten.gamepad
 					this.resetStartPos();
 					this.resetTouchPoint();
 				}
+				this.updateTouchPoint();
 				this.calcTouchVector();
 			}
 
+		}
+
+		public override void updateStatus()
+		{
+			this.updateTouchAction();
+			this.updateCtrlStatus();
 			// this.exportTouchStatus()
 		}
 
