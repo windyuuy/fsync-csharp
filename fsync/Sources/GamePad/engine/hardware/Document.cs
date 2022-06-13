@@ -141,19 +141,19 @@ namespace WTC.DOM
 				{
 					var keyCode = (KeyCode)key;
 
-					if (this.pressedKeys.ContainsKey(keyCode))
-					{
-						this.pressedKeys.Remove(keyCode);
-
-						var e = new KeyboardEvent();
-						e.key = Enum.GetName(typeof(UnityEngine.KeyCode), keyCode);
-						e.keyCode = (int)keyCode;
-
-						this.onkeyup(e);
-					}
-
 					if (Input.GetKeyDown(keyCode))
 					{
+						if (this.pressedKeys.ContainsKey(keyCode))
+						{
+							this.pressedKeys.Remove(keyCode);
+
+							var e1 = new KeyboardEvent();
+							e1.key = Enum.GetName(typeof(UnityEngine.KeyCode), keyCode);
+							e1.keyCode = (int)keyCode;
+
+							this.onkeyup(e1);
+						}
+
 						var e = new KeyboardEvent();
 						e.key = Enum.GetName(typeof(UnityEngine.KeyCode), keyCode);
 						e.keyCode = (int)keyCode;
